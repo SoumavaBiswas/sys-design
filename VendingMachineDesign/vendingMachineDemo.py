@@ -1,7 +1,6 @@
 from VendingMachineDesign.products import Coke, Pepsi, Lays, Snickers
 from VendingMachineDesign.vendingMachine import VendingMachine
-from VendingMachineDesign.coins import Coins
-from VendingMachineDesign.notes import Note
+from VendingMachineDesign.money import CoinType, NoteType
 
 class VendingMachineDemo:
     def run(self):
@@ -19,9 +18,9 @@ class VendingMachineDemo:
         print(vendingMachine.add_product(snickers, 10))
 
         print(vendingMachine.select_product(coke))
-        print(vendingMachine.add_coin(Coins.TEN))
+        print(vendingMachine.add_coin(CoinType.FIVE))
         print(vendingMachine.dispense_product())
-        print(vendingMachine.add_note(Note.TWENTY))
+        print(vendingMachine.add_note(NoteType.TWENTY))
         print(vendingMachine.get_change())
         print(vendingMachine.dispense_product())
         print(vendingMachine.get_change())

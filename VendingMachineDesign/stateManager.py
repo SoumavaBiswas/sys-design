@@ -25,25 +25,7 @@ class StateManager():
             print("Please collect the balance for previous transaction.")
             return False
     
-    def add_coin(self):
-        if self.state == States.IDLE:
-            print("Please select a product first.")
-            return False
-        elif self.state == States.READY:
-            self.state = States.WAITING
-            return True
-        elif self.state == States.WAITING:
-            self.state = States.WAITING
-            return True
-        elif self.state == States.DISPENSE:
-            print("Please collect the dispensed product first.")
-            return False
-        elif self.state == States.BALANCE:
-            print("Please collect the balance for previous transaction.")
-            return False
-    
-    
-    def add_note(self):
+    def add_money(self):
         if self.state == States.IDLE:
             print("Please select a product first.")
             return False

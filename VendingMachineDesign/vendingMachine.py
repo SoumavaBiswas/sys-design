@@ -2,9 +2,8 @@ from VendingMachineDesign.inventory import Inventory
 from VendingMachineDesign.paymentProcessor import PaymentProcessor
 from VendingMachineDesign.stateManager import StateManager
 from VendingMachineDesign.states import States
-from VendingMachineDesign.coins import Coins
-from VendingMachineDesign.notes import Note
 from threading import Lock
+from VendingMachineDesign.money import Money, CoinType, NoteType, Coin, Note
 
 
 class VendingMachine:
@@ -36,9 +35,10 @@ class VendingMachine:
         return "Sorry! Could not dispense the product. Please try again."
         
         
-    def add_coin(self, coin: Coins):
-        if self.stateManager.add_coin():
-            self.paymentProcessor.add_coin(coin)
+    def add_coin(self, coin_type: CoinType):
+        if self.stateManager.add_money():
+            coin = Coin(coin_type)
+            self.paymentProcessor.add_money(coin)
             product_price = self.inventory.get_selected_product().price
             current_balance = self.paymentProcessor.get_balance()
             if current_balance >= product_price:
@@ -46,9 +46,10 @@ class VendingMachine:
                 return f"Amount ({coin.value}) added. Balance is sufficient. Please collect the dispensed product."
             return f"Amount ({coin.value}) added. Please add {product_price - current_balance} more."
         
-    def add_note(self, note: Note):
-         if self.stateManager.add_note():
-            self.paymentProcessor.add_note(note)
+    def add_note(self, note_type: NoteType):
+         if self.stateManager.add_money():
+            note = Note(note_type)
+            self.paymentProcessor.add_money(note)
             product_price = self.inventory.get_selected_product().price
             current_balance = self.paymentProcessor.get_balance()
             if current_balance >= product_price:
@@ -58,7 +59,9 @@ class VendingMachine:
 
     def get_change(self):
         if self.stateManager.get_change():
-            return f'Balance ({self.paymentProcessor.get_change()}) returned successfully.'
+            balance = self.paymentProcessor.get_change()
+            if balance > 0:
+                return f'Balance ({balance}) returned successfully.'
         return "No change available"
 
     

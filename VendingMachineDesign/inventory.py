@@ -18,22 +18,17 @@ class Inventory:
         
     def add_product(self, product: Product, quantity: int) -> str:
         if product in self.items:
-            self.items[product] += quantity
+            self.items[product.name] += quantity
             return f"{quantity} {product.name} added to inventory"
         else:
-            self.items[product] = quantity
+            self.items[product.name] = quantity
             return f"{quantity} {product.name} added to inventory"
     
     def check_availability(self, product: Product) -> bool:
-        return product in self.items and self.items[product] > 0
+        return product.name in self.items and self.items[product.name] > 0
     
     def dispense_product(self) -> str:
             product = self.selected_product
-            self.items[product] -= 1
+            self.items[product.name] -= 1
             return f"{product.name} dispensed successfully."
     
-    def get_product_price(self, product: Product) -> int:
-        return product.price if product in self.items else 0
-    
-    def get_current_state(self) -> str:
-        return self.state

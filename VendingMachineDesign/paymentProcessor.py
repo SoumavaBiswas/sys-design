@@ -1,20 +1,15 @@
-from VendingMachineDesign.coins import Coins
-from VendingMachineDesign.notes import Note
-
-
+from VendingMachineDesign.money import Money
 class PaymentProcessor:
     def __init__(self):
         self.balance = 0
     
-    def add_coin(self, coin: Coins):
-        self.balance += coin.value
-    
-    def add_note(self, note: Note):
-        self.balance += note.value
+    def add_money(self, money: Money):
+        self.balance += money.value
     
     def make_payment(self, amount):
         if self.balance >= amount:
             self.balance -= amount
+            print(f'Payment successful. Balance: {self.balance}')
             return True
         return False
     
