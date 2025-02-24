@@ -26,7 +26,7 @@ The system follows an **object-oriented design**, where each entity represents a
 ---
 
 ## 🏗️ UML Diagram
-![Swiggy UML](assets/swiggy.drawio.svg)
+![Swiggy UML](assets/swiggy.svg)
 
 ---
 
