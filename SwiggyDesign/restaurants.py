@@ -34,4 +34,4 @@ class Restaurant:
       self.total_rating += new_rating
       self.rating_count += 1
       self.rating = self.total_rating / self.rating_count
-      return self
+      

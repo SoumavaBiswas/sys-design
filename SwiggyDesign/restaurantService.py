@@ -29,13 +29,12 @@ class RestaurantService:
     
     
     def get_nearby_restaurants(self, lng, lat):
-        ans = []
-        for restaurant in self.restaurants.values():
-            lat1, lng1 = restaurant.location.lat, restaurant.location.lng
-            if util.get_distance(lat1, lat, lng1, lng) <= 5:
-                ans.append(restaurant)
-        return ans
-    
+       return sorted(
+        (restaurant for restaurant in self.restaurants.values()
+         if util.get_distance(lat, restaurant.location.lat, lng, restaurant.location.lng) <= 5),
+        key=lambda r: r.rating,  # Sort by highest rating
+        reverse=True
+    )
 
     def add_rating(self, rid, rating):
         restaurant = self.restaurants.get(rid, None)

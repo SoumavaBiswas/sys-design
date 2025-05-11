@@ -54,7 +54,8 @@ class Swiggy:
             order = self.orderService.get(oid)
             restaurant = self.restaurantService.get_restaurant(order.rid)
             agent = self.agentService.get_available_agent(restaurant.location)
-            agent.assignOrder(oid)
+            if agent:
+                agent.assignOrder(oid)
         if status == OrderStatus.DELIVERED:
             order = self.orderService.get(oid)
             agent = self.agentService.get_agent(order.aid)

@@ -81,6 +81,6 @@ class StackOverflow:
         answers = []
         for qsn in self.questions.values():
             for ans in qsn.answers:
-                if ans.uid == uid:
+                if ans.uid == uid: 
                     answers.append(str(ans))
         return answers

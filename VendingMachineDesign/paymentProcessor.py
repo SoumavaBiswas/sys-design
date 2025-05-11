@@ -9,7 +9,6 @@ class PaymentProcessor:
     def make_payment(self, amount):
         if self.balance >= amount:
             self.balance -= amount
-            print(f'Payment successful. Balance: {self.balance}')
             return True
         return False
     

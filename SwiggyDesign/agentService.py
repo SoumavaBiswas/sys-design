@@ -19,10 +19,8 @@ class AgentService:
                 heapq.heappush(ans, (distance, agent))
         if not ans:
             return None
-        assigned_agent = heapq.heappop(ans)[1]
-        assigned_agent.updateAvailability(False)
-        return assigned_agent
-    
+        return heapq.heappop(ans)[1]
+        
     def make_free(self, aid):
         agent = self.agents.get(aid)
         if agent:
