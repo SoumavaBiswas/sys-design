@@ -25,7 +25,7 @@
 4. POST: /v1/booking {postBody: hotelId, date, roomId[]} -> Return BookId
 
 # High Level Design
-![alt text](image.png)
+![alt text](image-1.png)
 
 
 # Low Level Design
