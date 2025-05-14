@@ -1,12 +1,8 @@
-from restaurantService import RestaurantService
-from userService import UserService
-from orderService import OrderService
-from user import User, UserNotFoundException
-from item import Item
-from restaurants import Restaurant
+from RestaurantService.restaurantService import RestaurantService, Restaurant, Item
+from UserService.userService import UserService, User, UserNotFoundException
+from OrderService.orderService import OrderService, OrderStatus
 from typing import List
-from order import OrderStatus
-from agentService import AgentService
+from AgentService.agentService import AgentService
 
 
 class Swiggy:
