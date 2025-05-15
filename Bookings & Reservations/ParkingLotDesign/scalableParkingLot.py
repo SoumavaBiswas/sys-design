@@ -3,6 +3,15 @@ from datetime import datetime
 import uuid
 import heapq
 
+"""
+1. Vehicle 
+2. Parking Spot 
+3. Ticket
+4. ParkingLot
+5. PaymentProcessor
+"""
+
+
 # -------------------- Vehicle Classes --------------------
 class Vehicle(ABC):
     def __init__(self, license_plate: str):

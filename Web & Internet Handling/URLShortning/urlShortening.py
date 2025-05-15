@@ -1,6 +1,5 @@
 import time
 import string
-from collections import defaultdict
 
 class URL:
     def __init__(self, id, long_url, short_url, expiry_time=None):
@@ -59,16 +58,26 @@ class URLShortenerService:
         self.repo = URLRepository()
         self.encoder = Base62Encoder()
 
-    def shorten_url(self, long_url, expiry_secs=None):
-        existing = self.repo.find_by_long_url(long_url)
-        if existing:
-            return self.DOMAIN + existing
+    def shorten_url(self, long_url, expiry_secs=None, expiry_timestamp=None, custom_short_key=None):
+        if custom_short_key:
+            if self.repo.find_by_short_url(custom_short_key):
+                raise Exception("Custom short URL already in use")
+            short_key = custom_short_key
+        else:
+            existing = self.repo.find_by_long_url(long_url)
+            if existing:
+                return self.DOMAIN + existing
+            new_id = self.repo.get_next_id()
+            short_key = self.encoder.encode(new_id)
 
-        new_id = self.repo.get_next_id()
-        short_key = self.encoder.encode(new_id)
-        expiry_time = time.time() + expiry_secs if expiry_secs else None
+        if expiry_timestamp:
+            expiry_time = expiry_timestamp
+        elif expiry_secs:
+            expiry_time = time.time() + expiry_secs
+        else:
+            expiry_time = None
 
-        url_obj = URL(new_id, long_url, short_key, expiry_time)
+        url_obj = URL(self.repo.id_counter, long_url, short_key, expiry_time)
         self.repo.save(url_obj)
         return self.DOMAIN + short_key
 
@@ -83,3 +92,18 @@ class URLShortenerService:
 
         url_obj.click_count += 1
         return url_obj.long_url
+
+
+service = URLShortenerService()
+
+# Standard shortening
+print(service.shorten_url("https://example.com"))
+
+# Custom short key
+print(service.shorten_url("https://custom.com", custom_short_key="myalias"))
+
+# Expiry after 10 seconds
+print(service.shorten_url("https://temp.com", expiry_secs=10))
+
+# Expiry at a specific timestamp (e.g., 1 hour from now)
+print(service.shorten_url("https://future.com", expiry_timestamp=time.time() + 3600))
